@@ -1,0 +1,77 @@
+{
+  "description": "The schema describing response to requests for file status when provided a NeMO identifier.",
+  "type": "object",
+  "properties": {
+    "submission_id": {
+      "description": "The 7 character submission ID for the specified file.",
+      "type": "string",
+      "pattern": "^[A-Za-z0-9]$",
+      "minLength": 7,
+      "maxLength": 7
+    },
+    "status": {
+      "description": "The ingestion/release status of the specified file.",
+      "type": "string",
+      "enum": [
+        "COMPLETE",
+        "FAILED",
+        "IN_PROGRESS",
+        "HOLD"
+      ]
+    },
+    "submitter": {
+      "description": "The metadata of the NeMO submitter of the file.",
+      "type": "object",
+      "properties": {
+        "first": {
+          "description": "The first/given name of the submitter.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "last": {
+          "description": "The last/family name of the submitter.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "email": {
+          "description": "The email address of the submitter.",
+          "type": "string",
+          "format": "email"
+        },
+        "username": {
+          "description": "The NeMO username of the submitter.",
+          "type": "string",
+          "pattern": "^[a-z]+[a-z_\\-0-9]*[a-z]$",
+          "minLength": 3,
+          "maxLength": 32
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "first",
+        "last",
+        "email",
+        "username"
+      ]
+    },
+    "file_name": {
+      "description": "The file basename of the specified NeMO identifier.",
+      "type": "string"
+    },
+    "schema": {
+      "description": "The URL for the JSON-Schema describing the JSON in the response.",
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "submission_id",
+    "status",
+    "submitter",
+    "file_name",
+    "schema"
+  ]
+}
